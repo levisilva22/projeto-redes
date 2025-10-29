@@ -14,17 +14,23 @@ class ChatClient:
         try:
             self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client_socket.connect((self.host, self.port))
-            
+
+            # Recebe solicitação de nome
+            message = self.client_socket.recv(1024).decode('utf-8')
+            if message == "NOME":
+                self.username = input("Digite seu nome de usuário: ")
+                self.client_socket.send(self.username.encode('utf-8'))
+
             self.running = True
-            
+
             # Thread para receber mensagens
             receive_thread = threading.Thread(target=self.receive_messages)
             receive_thread.daemon = True
             receive_thread.start()
-            
+
             # Loop principal para enviar mensagens
             self.send_messages()
-            
+
         except Exception as e:
             print(f"[ERRO] Não foi possível conectar ao servidor: {e}")
         finally:
@@ -40,11 +46,6 @@ class ChatClient:
                     print("[SISTEMA] Conexão com o servidor perdida.")
                     self.running = False
                     break
-                
-                # Primeira mensagem é solicitação de nome
-                if message == "NOME":
-                    self.username = input("Digite seu nome de usuário: ")
-                    self.client_socket.send(self.username.encode('utf-8'))
                 else:
                     print(message)
             
@@ -90,5 +91,10 @@ class ChatClient:
         print("[SISTEMA] Desconectado.")
 
 if __name__ == "__main__":
-    client = ChatClient()
+    # Permite especificar o IP do servidor
+    server_ip = input("Digite o IP do servidor (ou Enter para localhost): ").strip()
+    if not server_ip:
+        server_ip = 'localhost'
+    
+    client = ChatClient(host=server_ip)
     client.start_client()
