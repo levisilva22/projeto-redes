@@ -26,7 +26,7 @@ No computador que será o servidor:
 cd projeto-redes
 
 # Execute o servidor
-python3 connection.py
+python3 server.py
 ```
 
 O servidor iniciará e mostrará:
@@ -77,19 +77,7 @@ sudo ufw allow 5555
 sudo ufw status
 ```
 
-### Teste de Conectividade
 
-Antes de executar o cliente, teste a conexão:
-
-```bash
-# Teste de ping
-ping 172.172.22.210
-
-# Teste da porta (se tiver telnet/nc)
-telnet 172.172.22.210 5555
-# ou
-nc -zv 172.172.22.210 5555
-```
 
 ## 📝 Comandos do Chat
 
@@ -100,14 +88,7 @@ Uma vez conectado, você pode usar:
 - **`/sair`:** Sair do chat
 - **`Ctrl+C`:** Forçar saída
 
-## 🏗️ Estrutura do Projeto
 
-```
-projeto-redes/
-├── connection.py    # Servidor de chat
-├── client.py        # Cliente de chat
-└── README.md        # Este arquivo
-```
 
 ## 🔧 Arquivos Principais
 
@@ -130,58 +111,10 @@ projeto-redes/
 - ✅ Mesma rede?
 - ✅ Firewall liberado?
 
-### Erro: "Porta já em uso"
-```bash
-# Matar processo na porta 5555
-sudo lsof -ti:5555 | xargs kill -9
-```
 
-### Verificar se servidor está rodando
-```bash
-# Verificar porta 5555
-netstat -tlnp | grep 5555
-# ou
-ss -tlnp | grep 5555
-```
+## 👥 Autores
 
-## 📱 Exemplo de Uso
-
-**Terminal do Servidor:**
-```
-[SERVIDOR] Ouvindo em 0.0.0.0:5555
-[SERVIDOR] Aguardando conexões...
-[CONEXÃO] João (172.172.22.100:54321) conectou-se. Total: 1
-[CONEXÃO] Maria (172.172.22.101:54322) conectou-se. Total: 2
-[15:30] João: Olá pessoal!
-[15:30] Maria: Oi João!
-```
-
-**Terminal do Cliente:**
-```
-Digite o IP do servidor: 172.172.22.210
-Digite seu nome de usuário: João
-
-Comandos disponíveis:
-/sair - Sair do chat
-/usuarios - Listar usuários online
-
-[SISTEMA] Bem-vindo(a) ao chat, João!
-[SISTEMA] Maria entrou no chat!
-Olá pessoal!
-[15:30] Maria: Oi João!
-```
-
-## 🔒 Considerações de Segurança
-
-⚠️ **IMPORTANTE:** Este é um projeto educacional. Para uso em produção, considere:
-- Criptografia das mensagens
-- Autenticação de usuários
-- Validação de entrada
-- Limitação de taxa de mensagens
-
-## 👥 Autor
-
-Desenvolvido por **lv_silva** como projeto de aprendizado de redes e sockets em Python.
+Desenvolvido por **Levi Farias**, **Lucas Beelen** e **Matheus Almeida** como projeto de aprendizado de redes e sockets em Python.
 
 ---
 
